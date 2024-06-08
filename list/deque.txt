@@ -1,0 +1,126 @@
+#include<iostream>
+using namespace std;
+typedef struct Node
+{
+    int num;
+    struct Node* next;
+    struct Node* pre;
+}Node;
+typedef struct Q{
+    Node* front;
+    Node* back;
+}qu;
+
+int main()
+{
+    int n;
+    cin>>n;
+    qu b;
+    for(int i=0;i<n;i++)
+    {
+        int x;
+        cin>>x;
+        Node* cur=new Node;
+        cur->num=x;
+        cur->next=NULL;
+        if(b.front==NULL)
+        {
+            b.front=b.back=cur;
+        }
+        else
+        {
+            cur->next=b.front;
+            b.front->pre=cur;
+            b.front=cur;
+            
+        }
+        
+    }
+}
+// ver 2
+#include<iostream>
+using namespace std;
+typedef struct Node
+{
+    int num;
+    struct Node* next;
+    struct Node* prev;
+}Node;
+typedef struct Q 
+{
+    Node* front;
+    Node* back;
+}qu;
+int main()
+{
+    int n;
+    cin>>n;
+    qu b; 
+    b.front=NULL;
+    for(int i=0;i<n;i++)
+    {
+        int x;
+        cin>>x;
+        Node* cur= new Node;
+        cur->num=x;
+        if(b.front==NULL)
+        {
+            b.front=b.back=cur;
+            b.front->prev=b.back->prev=NULL;
+        }
+        else
+        {   cur->prev=cur;
+            b.back->next=cur;
+            b.back=cur;
+        }
+    }
+    Node* ptr=NULL;//<<"<<ptr->prev->num<<endl "<<ptr->next->num<<endl
+    for(ptr=b.front;ptr!=NULL;ptr=ptr->next)
+    {
+        cout<<ptr->num<<" ";
+    }
+}
+//v3
+#include<iostream>
+using namespace std;
+typedef struct Node
+{
+    int num;
+    struct Node* next;
+    struct Node* prev;
+}Node;
+typedef struct Q 
+{
+    Node* front;
+    Node* back;
+}qu;
+int main()
+{
+    int n;
+    cin>>n;
+    qu b; 
+    b.front=NULL;
+    for(int i=0;i<n;i++)
+    {
+        int x;
+        cin>>x;
+        Node* cur= new Node;
+        cur->num=x;
+        if(b.front==NULL)
+        {
+            b.front=b.back=cur;
+            b.front->prev=b.back->prev=NULL;
+        }
+        else
+        {   cur->prev=b.back;
+            b.back->next=cur;
+            b.back=cur;
+        }
+    }
+    Node* ptr=NULL;//<<"<<ptr->prev->num<<endl "<<ptr->next->num<<endl
+    for(ptr=b.front;ptr!=NULL;ptr=ptr->next)
+    {
+        cout<<ptr->num<<" ";
+    }
+ 
+}

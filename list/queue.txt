@@ -1,0 +1,44 @@
+#include<iostream>
+using namespace std;
+typedef struct Node
+{
+    int num;
+    struct Node* next;
+}Node;
+typedef struct Q{
+    Node *front;
+    Node* back;
+} Que;
+int main()
+{
+    int n;
+    cin>>n;
+    Que Q;
+    Q.front=NULL;
+    Q.back=NULL;
+    for(int i=0;i<n;i++)
+    {
+        int x;
+        cin>>x;
+        Node *cur= new Node;
+        cur->num=x;
+        if(Q.front==NULL)
+        {
+            Q.front=cur;
+            Q.back=cur;
+        }
+        else
+        {
+            Q.back->next=cur;
+            Q.back=cur;
+        }
+    }
+    Node *ptr=NULL;
+    for( ptr=Q.front;ptr!=NULL;ptr=ptr->next)
+    {
+        cout<<ptr->num<<" ";
+    }
+}
+  
+  
+  

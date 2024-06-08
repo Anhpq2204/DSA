@@ -1,0 +1,87 @@
+// stack
+#include<iostream>
+using namespace std;
+typedef struct Node
+{
+    int num;
+    struct Node* next;
+}Node;
+Node* makenode(int x)
+{
+    Node* them=new Node;
+    them->num=x;
+    them->next=NULL;
+    return them;
+}
+int main()
+{
+    int n;
+    cin>>n;
+    Node* list=new Node;
+    for(int i=0;i<n;i++)
+    {
+        int p;
+        cin>>p;
+        Node* cur=new Node;
+        cur->num=p;
+        cur->next=list->next;
+        list->next=cur;
+    }
+    Node* ptr=new Node;
+    for(ptr=list;ptr->next!=NULL;ptr=ptr->next)
+    {
+        cout<<list->num<<" ";
+    }
+    
+}
+//stack
+n->next=list;
+list=n;
+// delte
+temp=pred->next;
+pred->next=temp->next;
+free temp;
+//
+#include<iostream>
+using namespace std;
+typedef struct Node
+{
+    int num;
+    struct Node* next;
+    struct Node* prev;
+}Node;
+typedef struct Q 
+{
+    Node* front;
+    Node* back;
+}qu;
+int main()
+{
+    int n;
+    cin>>n;
+    qu b; 
+    b.front=NULL;
+    for(int i=0;i<n;i++)
+    {
+        int x;
+        cin>>x;
+        Node* cur= new Node;
+        cur->num=x;
+        if(b.front==NULL)
+        {
+            b.front=b.back=cur;
+            b.front->prev=b.back->prev=NULL;
+        }
+        else
+        {   cur->prev=b.back;
+            b.back->next=cur;
+            b.back=cur;
+        }
+    }
+    Node* ptr=NULL;//<<"<<ptr->prev->num<<endl "<<ptr->next->num<<endl
+    for(ptr=b.back;ptr!=NULL;ptr=ptr->prev)
+    {
+        cout<<ptr->num<<" ";
+    }
+    
+}

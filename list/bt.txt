@@ -1,0 +1,132 @@
+#include<iostream>
+#include<stdlib.h>
+using namespace std;
+typedef struct Node
+{
+    int num;
+    struct Node* next;
+    struct Node* prev;
+}Node;
+typedef struct Q 
+{
+    Node* front;
+    Node* back;
+}qu;
+
+Node* search(Node* p, int k,qu& b)
+{   Node* ptr=NULL;
+    for(ptr=p;ptr!=NULL;ptr=ptr->next)
+    {
+        if(ptr->num==k) {return ptr;}
+    }
+    return NULL;
+}
+void remove(Node *p, int k,qu& b)
+{
+    Node* ptr=search(p,k,b);
+    Node* cur=new Node;
+    if(ptr->prev!=NULL&&ptr->next!=NULL)
+    {cur->next=ptr->next;
+    cur->prev=ptr->prev;
+    ptr->prev->next=cur->next;
+    ptr->next->prev=cur->prev;
+}
+    else if(ptr->prev==NULL)
+    {   cur=ptr->next;
+        cur->prev=NULL;
+        b.front=cur;
+    }
+    else if(ptr->next==NULL)
+    {   
+        cur=ptr->prev;
+        cur->next=NULL;
+        ptr=NULL;
+    }
+}
+void addfirst(Node*p,int k,qu& b)
+{   Node* cur=search(p,k,b);
+    if(search(p,k,b)!=NULL){return;}
+    else
+    {
+        Node* ptr=new Node;
+        ptr->num=k;
+        ptr->next=b.front;
+        ptr->prev=NULL;
+        b.front->prev=ptr;
+        b.front=ptr;
+    }
+}
+void addlast(Node*p,int k,qu& b)
+{Node* cur=search(p,k,b);
+    if(search(p,k,b)!=NULL){return;}
+    
+    else
+    {
+        Node* ptr=new Node;
+        ptr->num=k;
+        b.back->next=ptr;
+        ptr->prev=b.back;
+        ptr->next=NULL;
+        b.back=ptr;
+    }
+}
+void addbefore(Node*p,int u,int v,qu &b)
+{
+    Node* cur=search(p,v,b);
+    if(cur==NULL||search(p,u,b)!=NULL){return;}
+    else
+    {
+        Node* ptr= new Node;
+        ptr->num=u;
+        ptr->next=cur;
+        ptr->prev=cur->prev;
+        cur->prev->next=ptr;
+    }
+}
+void addafter(Node*p,int u,int v,qu &b)
+{
+    Node* cur=search(p,v,b);
+    if(cur==NULL||search(p,u,b)!=NULL){return;}
+    else
+    {
+        Node* ptr= new Node;
+        ptr->num=u;
+        ptr->prev=cur;
+        ptr->next=cur->next;
+        cur->next->prev=ptr;
+        cur->next=ptr;
+    }
+}
+
+
+int main()
+{
+    int n;
+    cin>>n;
+    qu b; 
+    b.front=NULL;
+    for(int i=0;i<n;i++)
+    {
+        int x;
+        cin>>x;
+        Node* cur= new Node;
+        cur->num=x;
+        if(b.front==NULL)
+        {
+            b.front=b.back=cur;
+            b.front->prev=b.back->prev=NULL;
+        }
+        else
+        {   cur->prev=b.back;
+            b.back->next=cur;
+            b.back=cur;
+        }
+    }
+    Node* ptr=NULL;
+    addfirst(b.front,7,b);
+    cout<<b.front;
+    for(ptr=b.front;ptr!=NULL;ptr=ptr->next)
+    {
+        cout<<ptr->num<<" "<<ptr<<endl;
+    }
+}
